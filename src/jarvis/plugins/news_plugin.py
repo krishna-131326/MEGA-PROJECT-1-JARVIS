@@ -1,9 +1,12 @@
-import requests
 import logging
-from jarvis.core.plugin import Plugin
+
+import requests
+
 from jarvis.core.config import settings
+from jarvis.core.plugin import Plugin
 
 logger = logging.getLogger(__name__)
+
 
 class NewsPlugin(Plugin):
     @property
@@ -27,14 +30,14 @@ class NewsPlugin(Plugin):
             )
             r.raise_for_status()
             data = r.json()
-            articles = data.get('articles', [])
-            
+            articles = data.get("articles", [])
+
             if not articles:
                 return "I couldn't find any news at the moment."
-                
-            headlines = [article['title'] for article in articles[:5] if article.get('title')]
+
+            headlines = [article["title"] for article in articles[:5] if article.get("title")]
             return "Here are the top headlines:\n" + "\n".join(f"- {h}" for h in headlines)
-            
+
         except Exception as e:
             logger.error(f"Failed to fetch news: {e}")
             return "There was an error retrieving the news."

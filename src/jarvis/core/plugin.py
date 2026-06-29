@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
+
 class Plugin(ABC):
     """Base class for all Jarvis plugins."""
-    
+
     @property
     @abstractmethod
     def name(self) -> str:

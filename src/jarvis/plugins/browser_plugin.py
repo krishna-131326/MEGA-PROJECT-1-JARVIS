@@ -1,5 +1,7 @@
 import webbrowser
+
 from jarvis.core.plugin import Plugin
+
 
 class BrowserPlugin(Plugin):
     @property
@@ -30,5 +32,5 @@ class BrowserPlugin(Plugin):
                 webbrowser.open(f"https://www.bing.com/search?q={search_query}")
                 return f"Searching for {parts[1]}."
             return "What do you want me to search for?"
-            
+
         return "I can't open that website yet."

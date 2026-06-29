@@ -1,6 +1,7 @@
 from jarvis.core.plugin import Plugin
 from jarvis.providers.music_provider import MusicProvider
 
+
 class MusicPlugin(Plugin):
     def __init__(self, provider: MusicProvider):
         self.provider = provider
