@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  jarvis:
+    build: .
+    environment:
+      - NEWS_API_KEY=${NEWS_API_KEY}
+    volumes:
+      - ./src:/app/src
+    command: ["python", "-m", "jarvis.cli"]

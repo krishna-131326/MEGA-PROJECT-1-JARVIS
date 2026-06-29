@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.26,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jarvis"
+version = "0.2.0"
+description = "A production-grade AI assistant platform."
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "pygame>=2.6,<3",
+    "pyttsx3>=2.97,<3",
+    "requests>=2.32,<3",
+    "SpeechRecognition[audio]>=3.10,<4",
+    "pydantic>=2.7,<3",
+    "pydantic-settings>=2.2,<3"
+]
+
+[project.scripts]
+jarvis = "jarvis.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.10,<2",
+    "pytest>=8.2,<9",
+    "pytest-cov>=5.0,<7",
+    "ruff>=0.4.0,<1",
+    "bandit>=1.7,<2",
+    "pip-audit>=2.7,<3",
+    "pre-commit>=3.7,<4",
+    "types-requests>=2.32.0.20240622"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jarvis"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unreachable = true
+mypy_path = "src"
