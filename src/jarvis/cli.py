@@ -1,35 +1,16 @@
 import logging
+import asyncio
 
 from jarvis.core.config import settings
-from jarvis.core.router import CommandRouter
-from jarvis.plugins.browser_plugin import BrowserPlugin
-from jarvis.plugins.music_plugin import MusicPlugin
-from jarvis.plugins.news_plugin import NewsPlugin
-from jarvis.providers.music_provider import WebMusicProvider
+from jarvis.api.dependencies import get_assistant
 
 logging.basicConfig(
     level=settings.log_level, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
-
-def get_router() -> CommandRouter:
-    router = CommandRouter()
-
-    # Initialize providers
-    music_provider = WebMusicProvider(config_path=settings.music_config_path)
-    # llm_provider = GrokProvider(api_key=settings.grok_api_key)
-
-    # Register plugins
-    router.register_plugin(NewsPlugin())
-    router.register_plugin(BrowserPlugin())
-    router.register_plugin(MusicPlugin(provider=music_provider))
-
-    return router
-
-
-def main() -> None:
+async def async_main() -> None:
     print("Initializing Jarvis Assistant...")
-    router = get_router()
+    assistant = get_assistant()
 
     print("Type your commands (or 'exit' to quit):")
     while True:
@@ -38,8 +19,8 @@ def main() -> None:
             if command.lower() in ("exit", "quit"):
                 break
 
-            response = router.route(command)
-            print(f"Jarvis: {response}")
+            response_text, _ = await assistant.process(command)
+            print(f"Jarvis: {response_text}")
 
         except KeyboardInterrupt:
             print("\nExiting...")
@@ -47,6 +28,8 @@ def main() -> None:
         except Exception as e:
             print(f"Unexpected error: {e}")
 
+def main() -> None:
+    asyncio.run(async_main())
 
 if __name__ == "__main__":
     main()

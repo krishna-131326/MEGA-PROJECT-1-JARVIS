@@ -1,26 +1,36 @@
 import pytest
 from jarvis.core.router import CommandRouter
-from jarvis.core.plugin import Plugin
-
-class DummyPlugin(Plugin):
-    @property
-    def name(self) -> str:
-        return "DummyPlugin"
-
-    def can_handle(self, query: str) -> bool:
-        return "dummy" in query.lower()
-
-    def execute(self, query: str) -> str:
-        return "Executed dummy."
+from jarvis.plugins.news_plugin import NewsPlugin
 
 def test_router_handles_valid_command():
     router = CommandRouter()
-    router.register_plugin(DummyPlugin())
-    response = router.route("run dummy command")
-    assert response == "Executed dummy."
+    plugin = NewsPlugin()
+    router.register_plugin(plugin)
+    matched = router.match("what's the news")
+    assert matched == plugin
 
 def test_router_handles_unknown_command():
     router = CommandRouter()
-    router.register_plugin(DummyPlugin())
-    response = router.route("do something else")
-    assert response == "I'm sorry, I don't know how to handle that command."
+    router.register_plugin(NewsPlugin())
+    matched = router.match("unknown command")
+    assert matched is None
+
+class HighPriorityPlugin:
+    name = "high"
+    priority = 10
+    def can_handle(self, query): return True
+    
+class LowPriorityPlugin:
+    name = "low"
+    priority = 100
+    def can_handle(self, query): return True
+
+def test_router_priority():
+    router = CommandRouter()
+    # Register in reverse priority order
+    router.register_plugin(LowPriorityPlugin())
+    router.register_plugin(HighPriorityPlugin())
+    
+    # High priority should win even if registered last
+    matched = router.match("anything")
+    assert matched.name == "high"

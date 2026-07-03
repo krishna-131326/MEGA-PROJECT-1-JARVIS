@@ -6,13 +6,38 @@ from jarvis.core.plugin import Plugin
 class BrowserPlugin(Plugin):
     @property
     def name(self) -> str:
-        return "BrowserPlugin"
+        return "browser"
+        
+    @property
+    def priority(self) -> int:
+        return 100
 
     def can_handle(self, query: str) -> bool:
         return "open" in query.lower() or "search" in query.lower()
 
-    def execute(self, query: str) -> str:
-        q = query.lower()
+        return "I can't open that website yet."
+
+    def get_tool_schema(self) -> dict:
+        return {
+            "type": "function",
+            "function": {
+                "name": self.name,
+                "description": "Open a website or search the web in the user's browser. WARNING: This only opens the user's local browser window, it DOES NOT return search results or website text back to you.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "type": "string",
+                            "description": "The action to perform, e.g., 'open google', 'search kittens'."
+                        }
+                    },
+                    "required": ["action"]
+                }
+            }
+        }
+
+    async def execute(self, query: str = "", **kwargs) -> str:
+        q = kwargs.get("action", query).lower()
         if "open google" in q:
             webbrowser.open("https://google.com")
             return "Opening Google."

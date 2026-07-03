@@ -16,16 +16,15 @@ class CommandRouter:
         self.plugins.append(plugin)
         logger.debug(f"Registered plugin: {plugin.name}")
 
-    def route(self, query: str) -> str:
-        """Routes the query to the first matching plugin."""
-        logger.info(f"Routing query: '{query}'")
-        for plugin in self.plugins:
+    def match(self, query: str) -> Plugin | None:
+        """Finds the first plugin that can handle the query."""
+        logger.info(f"Matching query: '{query}'")
+        
+        # Sort by priority ascending (lower numbers execute first)
+        sorted_plugins = sorted(self.plugins, key=lambda p: p.priority)
+        
+        for plugin in sorted_plugins:
             if plugin.can_handle(query):
-                logger.info(f"Plugin {plugin.name} handling query.")
-                try:
-                    return plugin.execute(query)
-                except Exception as e:
-                    logger.error(f"Error executing plugin {plugin.name}: {e}")
-                    return f"Error executing command via {plugin.name}."
-
-        return "I'm sorry, I don't know how to handle that command."
+                logger.info(f"Matched plugin {plugin.name} for query.")
+                return plugin
+        return None

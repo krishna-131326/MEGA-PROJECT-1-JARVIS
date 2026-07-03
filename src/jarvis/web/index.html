@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarvis AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    
+    <link rel="stylesheet" href="/app/css/variables.css">
+    <link rel="stylesheet" href="/app/css/layout.css">
+    <link rel="stylesheet" href="/app/css/components.css">
+    <link rel="stylesheet" href="/app/css/animations.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Sidebar -->
+        <aside id="sidebar" aria-label="Sidebar">
+            <div class="sidebar-header">
+                <h2>Jarvis</h2>
+                <div id="health-indicator" class="status-dot healthy" title="System Healthy"></div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-view="chat">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    Chat
+                </button>
+                <button class="nav-btn" data-view="plugins">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    Plugins
+                </button>
+                <button class="nav-btn" data-view="health">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                    Health
+                </button>
+                <button class="nav-btn" data-view="settings">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Settings
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="clear-chat-btn" class="secondary-btn">Clear Chat (Ctrl+L)</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            
+            <!-- Chat View -->
+            <div id="view-chat" class="view-panel active">
+                <div id="chat-messages" class="scroll-container" aria-live="polite">
+                    <!-- Messages will be injected here -->
+                    <div class="message system-message">
+                        <div class="avatar jarvis-avatar">J</div>
+                        <div class="message-content">Hello, I'm Jarvis. How can I help you today?</div>
+                    </div>
+                </div>
+                
+                <div class="input-area">
+                    <div class="input-wrapper">
+                        <textarea id="chat-input" placeholder="Message Jarvis... (Shift+Enter for new line)" rows="1" aria-label="Chat input"></textarea>
+                        <button id="send-btn" aria-label="Send message">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plugins View -->
+            <div id="view-plugins" class="view-panel hidden">
+                <div class="panel-header">
+                    <h2>Active Plugins</h2>
+                </div>
+                <div class="panel-body">
+                    <ul id="plugins-list" class="plugin-grid">
+                        <!-- Loaded dynamically via JS -->
+                        <div class="loading-spinner"></div>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Health View -->
+            <div id="view-health" class="view-panel hidden">
+                <div class="panel-header">
+                    <h2>System Health</h2>
+                </div>
+                <div class="panel-body">
+                    <pre id="health-data" class="code-block"><div class="loading-spinner"></div></pre>
+                </div>
+            </div>
+            
+            <!-- Settings View -->
+            <div id="view-settings" class="view-panel hidden">
+                <div class="panel-header">
+                    <h2>Settings</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="setting-item">
+                        <label>Provider</label>
+                        <select disabled><option>Grok</option></select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Theme</label>
+                        <select disabled><option>Dark Graphite</option></select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Streaming</label>
+                        <input type="checkbox" checked disabled>
+                    </div>
+                    <p class="settings-note">Settings are currently managed via the backend configuration.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    
+    <script src="/app/js/state.js"></script>
+    <script src="/app/js/api.js"></script>
+    <script src="/app/js/markdown.js"></script>
+    <script src="/app/js/ui.js"></script>
+    <script src="/app/js/chat.js"></script>
+    <script src="/app/js/app.js"></script>
+</body>
+</html>
