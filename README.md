@@ -68,6 +68,5 @@ report credentials in public issues.
 
 ## License
 
-No license has been selected yet. Until the owner adds one, normal copyright restrictions
-apply and the repository is not an open-source release.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
