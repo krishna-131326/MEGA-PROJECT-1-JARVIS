@@ -1,3 +1,4 @@
+from typing import Any
 from jarvis.core.plugin import Plugin
 from jarvis.providers.music_provider import MusicProvider
 
@@ -17,9 +18,9 @@ class MusicPlugin(Plugin):
     def can_handle(self, query: str) -> bool:
         return query.lower().startswith("play")
 
-        return "Please tell me what song to play."
+
         
-    def get_tool_schema(self) -> dict:
+    def get_tool_schema(self) -> dict[str, Any]:
         return {
             "type": "function",
             "function": {
@@ -38,7 +39,7 @@ class MusicPlugin(Plugin):
             }
         }
 
-    async def execute(self, query: str = "", **kwargs) -> str:
+    async def execute(self, query: str = "", **kwargs: Any) -> str:
         song_name = kwargs.get("song_name")
         if not song_name:
             parts = query.lower().split(" ", 1)

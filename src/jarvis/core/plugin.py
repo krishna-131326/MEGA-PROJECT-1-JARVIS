@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Any
 
 
 class Plugin(ABC):
@@ -21,10 +22,10 @@ class Plugin(ABC):
         pass
 
     @abstractmethod
-    async def execute(self, query: str = "", **kwargs) -> str:
+    async def execute(self, query: str = "", **kwargs: Any) -> str:
         """Executes the command. Supports direct query or structured **kwargs from tool calls."""
         pass
         
-    def get_tool_schema(self) -> dict | None:
+    def get_tool_schema(self) -> dict[str, Any] | None:
         """Returns the OpenAI-compatible function definition for LLM tool calling. Override if the plugin supports it."""
         return None

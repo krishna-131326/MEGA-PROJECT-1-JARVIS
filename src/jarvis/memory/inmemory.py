@@ -6,7 +6,7 @@ from jarvis.core.config import settings
 class InMemoryBackend(MemoryBackend):
     """In-memory persistence for Jarvis sessions."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._sessions: Dict[str, List[Message]] = {}
 
     def get_messages(self, session_id: str) -> List[Message]:

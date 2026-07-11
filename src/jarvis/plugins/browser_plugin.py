@@ -1,5 +1,6 @@
 import webbrowser
 
+from typing import Any
 from jarvis.core.plugin import Plugin
 
 
@@ -15,9 +16,9 @@ class BrowserPlugin(Plugin):
     def can_handle(self, query: str) -> bool:
         return "open" in query.lower() or "search" in query.lower()
 
-        return "I can't open that website yet."
 
-    def get_tool_schema(self) -> dict:
+
+    def get_tool_schema(self) -> dict[str, Any]:
         return {
             "type": "function",
             "function": {
@@ -36,7 +37,7 @@ class BrowserPlugin(Plugin):
             }
         }
 
-    async def execute(self, query: str = "", **kwargs) -> str:
+    async def execute(self, query: str = "", **kwargs: Any) -> str:
         q = kwargs.get("action", query).lower()
         if "open google" in q:
             webbrowser.open("https://google.com")

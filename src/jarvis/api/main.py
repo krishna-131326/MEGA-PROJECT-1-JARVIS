@@ -27,7 +27,7 @@ web_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "web")
 app.mount("/app", StaticFiles(directory=web_dir, html=True), name="web")
 
 @app.get("/", include_in_schema=False)
-async def root():
+async def root() -> RedirectResponse:
     """Redirect to the Web UI."""
     return RedirectResponse(url="/app")
 

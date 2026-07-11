@@ -2,7 +2,7 @@ import logging
 import httpx
 from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
-from typing import List, Optional
+from typing import List, Optional, Any, cast
 from jarvis.llm.base import LLMProvider
 from jarvis.core.config import settings
 from jarvis.core.models import Message
@@ -34,7 +34,7 @@ class GrokProvider(LLMProvider):
         retry=retry_if_exception_type((httpx.RequestError, httpx.HTTPStatusError)),
         reraise=True
     )
-    async def _call_api(self, messages: List[Message], tools: Optional[List[dict]] = None) -> str | dict:
+    async def _call_api(self, messages: List[Message], tools: Optional[List[dict[str, Any]]] = None) -> str | dict[str, Any]:
         system_content = (
             "You are Jarvis, a helpful AI assistant. "
             "You must use the provided tools to fulfill requests. "
@@ -44,7 +44,7 @@ class GrokProvider(LLMProvider):
             "Exception: If a tool specifically states it 'opened a browser' or 'played music' locally, just inform the user you performed the action. "
             "DO NOT output raw JSON in your text response."
         )
-        api_messages = [{"role": "system", "content": system_content}]
+        api_messages: list[dict[str, Any]] = [{"role": "system", "content": system_content}]
         
         for msg in messages:
             if msg.role == "assistant" and msg.tool_calls:
@@ -91,11 +91,11 @@ class GrokProvider(LLMProvider):
             message_obj = data["choices"][0]["message"]
             
             if message_obj.get("tool_calls"):
-                return message_obj # Return the whole dict for tool handling
+                return cast(dict[str, Any], message_obj) # Return the whole dict for tool handling
                 
-            return message_obj.get("content", "")
+            return str(message_obj.get("content", ""))
 
-    async def generate(self, messages: List[Message], tools: Optional[List[dict]] = None) -> str | dict:
+    async def generate(self, messages: List[Message], tools: Optional[List[dict[str, Any]]] = None) -> str | dict[str, Any]:
         logger.info(f"Grok generating response for {len(messages)} messages.")
         if not self.api_key:
             return "Error: Grok API key is not configured."

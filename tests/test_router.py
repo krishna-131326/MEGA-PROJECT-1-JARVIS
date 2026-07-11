@@ -6,7 +6,7 @@ def test_router_handles_valid_command():
     router = CommandRouter()
     plugin = NewsPlugin()
     router.register_plugin(plugin)
-    matched = router.match("what's the news")
+    matched = router.match("news")
     assert matched == plugin
 
 def test_router_handles_unknown_command():

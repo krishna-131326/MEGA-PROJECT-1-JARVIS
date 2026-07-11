@@ -1,4 +1,5 @@
 from typing import Generator
+from jarvis.llm.base import LLMProvider
 from jarvis.core.router import CommandRouter
 from jarvis.core.config import settings
 from jarvis.llm.grok import GrokProvider
@@ -17,7 +18,7 @@ def get_router() -> CommandRouter:
     router.register_plugin(MusicPlugin(provider=music_provider))
     return router
 
-def get_llm():
+def get_llm() -> LLMProvider:
     if settings.grok_api_key:
         return GrokProvider(api_key=settings.grok_api_key)
     return MockProvider()

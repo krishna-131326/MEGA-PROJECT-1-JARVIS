@@ -6,7 +6,7 @@ from jarvis.providers.music_provider import WebMusicProvider
 
 def test_news_plugin_can_handle():
     plugin = NewsPlugin()
-    assert plugin.can_handle("what's the news") is True
+    assert plugin.can_handle("news") is True
     assert plugin.can_handle("tell me a joke") is False
 
 def test_browser_plugin_can_handle():

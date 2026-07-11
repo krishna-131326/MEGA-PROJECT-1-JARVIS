@@ -2,6 +2,7 @@ import logging
 
 import httpx
 
+from typing import Any
 from jarvis.core.config import settings
 from jarvis.core.plugin import Plugin
 
@@ -21,7 +22,7 @@ class NewsPlugin(Plugin):
         # Only use fast-path for exact simple commands
         return query.strip().lower() in ["news", "top news", "latest news"]
 
-    async def execute(self, query: str = "", limit: int = 5, topic: str = "", **kwargs) -> str:
+    async def execute(self, query: str = "", limit: int = 5, topic: str = "", **kwargs: str) -> str:
         api_key = settings.news_api_key
         if not api_key:
             return "News is unavailable because NEWS_API_KEY is not configured."
@@ -68,7 +69,7 @@ class NewsPlugin(Plugin):
             logger.error(f"Failed to fetch news: {e}")
             return "There was an error retrieving the news."
 
-    def get_tool_schema(self) -> dict:
+    def get_tool_schema(self) -> dict[str, Any]:
         return {
             "type": "function",
             "function": {
