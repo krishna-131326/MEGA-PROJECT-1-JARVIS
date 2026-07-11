@@ -26,8 +26,6 @@ def get_llm() -> LLMProvider:
     return MockProvider()
 
 
-
-
 # We can cache the service so we don't recreate it on every request
 _memory_backend = InMemoryBackend()
 _assistant_service = AssistantService(get_router(), get_llm(), _memory_backend)
