@@ -10,7 +10,7 @@ class Plugin(ABC):
     def name(self) -> str:
         """Name of the plugin (for tool calling and internal routing)."""
         pass
-        
+
     @property
     def priority(self) -> int:
         """Priority for deterministic routing (lower means evaluated first). Default is 100."""
@@ -25,7 +25,7 @@ class Plugin(ABC):
     async def execute(self, query: str = "", **kwargs: Any) -> str:
         """Executes the command. Supports direct query or structured **kwargs from tool calls."""
         pass
-        
+
     def get_tool_schema(self) -> dict[str, Any] | None:
         """Returns the OpenAI-compatible function definition for LLM tool calling. Override if the plugin supports it."""
         return None

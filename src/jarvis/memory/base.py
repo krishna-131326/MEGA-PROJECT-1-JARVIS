@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List
 from jarvis.core.models import Message
 
+
 class MemoryBackend(ABC):
     """Abstract base class for memory persistence."""
 

@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from datetime import datetime, timezone
 from typing import Optional, Any
 
+
 class Message(BaseModel):
     role: str
     content: str
@@ -9,7 +10,8 @@ class Message(BaseModel):
     tool: Optional[str] = None
     tool_calls: Optional[list[dict[str, Any]]] = None
     tool_call_id: Optional[str] = None
-    
+
+
 class AssistantResponse(BaseModel):
     response: str
     source: str  # "plugin" or "llm"

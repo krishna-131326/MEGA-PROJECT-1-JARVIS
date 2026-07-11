@@ -8,15 +8,13 @@ class BrowserPlugin(Plugin):
     @property
     def name(self) -> str:
         return "browser"
-        
+
     @property
     def priority(self) -> int:
         return 100
 
     def can_handle(self, query: str) -> bool:
         return "open" in query.lower() or "search" in query.lower()
-
-
 
     def get_tool_schema(self) -> dict[str, Any]:
         return {
@@ -29,12 +27,12 @@ class BrowserPlugin(Plugin):
                     "properties": {
                         "action": {
                             "type": "string",
-                            "description": "The action to perform, e.g., 'open google', 'search kittens'."
+                            "description": "The action to perform, e.g., 'open google', 'search kittens'.",
                         }
                     },
-                    "required": ["action"]
-                }
-            }
+                    "required": ["action"],
+                },
+            },
         }
 
     async def execute(self, query: str = "", **kwargs: Any) -> str:

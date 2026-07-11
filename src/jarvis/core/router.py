@@ -19,10 +19,10 @@ class CommandRouter:
     def match(self, query: str) -> Plugin | None:
         """Finds the first plugin that can handle the query."""
         logger.info(f"Matching query: '{query}'")
-        
+
         # Sort by priority ascending (lower numbers execute first)
         sorted_plugins = sorted(self.plugins, key=lambda p: p.priority)
-        
+
         for plugin in sorted_plugins:
             if plugin.can_handle(query):
                 logger.info(f"Matched plugin {plugin.name} for query.")

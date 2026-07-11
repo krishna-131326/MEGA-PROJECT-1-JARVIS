@@ -8,6 +8,7 @@ logging.basicConfig(
     level=settings.log_level, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
+
 async def async_main() -> None:
     print("Initializing Jarvis Assistant...")
     assistant = get_assistant()
@@ -28,8 +29,10 @@ async def async_main() -> None:
         except Exception as e:
             print(f"Unexpected error: {e}")
 
+
 def main() -> None:
     asyncio.run(async_main())
+
 
 if __name__ == "__main__":
     main()

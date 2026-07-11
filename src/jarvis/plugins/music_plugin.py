@@ -10,7 +10,7 @@ class MusicPlugin(Plugin):
     @property
     def name(self) -> str:
         return "music"
-        
+
     @property
     def priority(self) -> int:
         return 50
@@ -18,8 +18,6 @@ class MusicPlugin(Plugin):
     def can_handle(self, query: str) -> bool:
         return query.lower().startswith("play")
 
-
-        
     def get_tool_schema(self) -> dict[str, Any]:
         return {
             "type": "function",
@@ -31,12 +29,12 @@ class MusicPlugin(Plugin):
                     "properties": {
                         "song_name": {
                             "type": "string",
-                            "description": "The name of the song to play."
+                            "description": "The name of the song to play.",
                         }
                     },
-                    "required": ["song_name"]
-                }
-            }
+                    "required": ["song_name"],
+                },
+            },
         }
 
     async def execute(self, query: str = "", **kwargs: Any) -> str:
@@ -45,7 +43,7 @@ class MusicPlugin(Plugin):
             parts = query.lower().split(" ", 1)
             if len(parts) > 1:
                 song_name = parts[1]
-        
+
         if song_name:
             return self.provider.play(song_name)
         return "Please tell me what song to play."
