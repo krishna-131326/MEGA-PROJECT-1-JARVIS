@@ -1,16 +1,16 @@
-from typing import List, Dict
+
+from jarvis.core.config import settings
 from jarvis.core.models import Message
 from jarvis.memory.base import MemoryBackend
-from jarvis.core.config import settings
 
 
 class InMemoryBackend(MemoryBackend):
     """In-memory persistence for Jarvis sessions."""
 
     def __init__(self) -> None:
-        self._sessions: Dict[str, List[Message]] = {}
+        self._sessions: dict[str, list[Message]] = {}
 
-    def get_messages(self, session_id: str) -> List[Message]:
+    def get_messages(self, session_id: str) -> list[Message]:
         return self._sessions.get(session_id, [])
 
     def add_message(self, session_id: str, message: Message) -> None:
@@ -27,5 +27,5 @@ class InMemoryBackend(MemoryBackend):
         if session_id in self._sessions:
             del self._sessions[session_id]
 
-    def list_sessions(self) -> List[str]:
+    def list_sessions(self) -> list[str]:
         return list(self._sessions.keys())

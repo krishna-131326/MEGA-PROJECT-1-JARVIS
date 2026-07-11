@@ -1,6 +1,6 @@
+from datetime import UTC, datetime
+
 from pydantic import BaseModel
-from typing import Optional
-from datetime import datetime, timezone
 
 
 class ChatRequest(BaseModel):
@@ -13,8 +13,8 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
     source: str
-    plugin_used: Optional[str] = None
-    timestamp: datetime = datetime.now(timezone.utc)
+    plugin_used: str | None = None
+    timestamp: datetime = datetime.now(UTC)
 
 
 class HealthResponse(BaseModel):

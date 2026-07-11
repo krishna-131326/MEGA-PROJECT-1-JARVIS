@@ -1,8 +1,10 @@
 import os
+
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+
 from jarvis.api.routers import chat, health
 
 app = FastAPI(

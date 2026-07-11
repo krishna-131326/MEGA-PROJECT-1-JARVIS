@@ -1,4 +1,5 @@
 from typing import Any
+
 from jarvis.core.plugin import Plugin
 from jarvis.providers.music_provider import MusicProvider
 

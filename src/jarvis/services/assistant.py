@@ -1,9 +1,10 @@
-import logging
 import json
+import logging
+
+from jarvis.core.models import AssistantResponse, Message
 from jarvis.core.router import CommandRouter
 from jarvis.llm.base import LLMProvider
 from jarvis.memory.base import MemoryBackend
-from jarvis.core.models import Message, AssistantResponse
 
 logger = logging.getLogger(__name__)
 
@@ -51,10 +52,10 @@ class AssistantService:
                 tools.append(schema)
                 plugins_map[schema["function"]["name"]] = p
 
-        MAX_TOOL_CALLS = 5
+        max_tool_calls = 5
         visited_tools = set()
 
-        for i in range(MAX_TOOL_CALLS):
+        for _ in range(max_tool_calls):
             messages = self.memory.get_messages(session_id)
 
             try:
@@ -93,7 +94,7 @@ class AssistantService:
 
                 try:
                     kwargs = json.loads(args)
-                except:
+                except Exception:
                     kwargs = {}
 
                 if func_name in plugins_map:

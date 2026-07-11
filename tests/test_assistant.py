@@ -1,10 +1,12 @@
-import pytest
 import json
-from jarvis.services.assistant import AssistantService
-from jarvis.core.router import CommandRouter
-from jarvis.memory.inmemory import InMemoryBackend
+
+import pytest
+
 from jarvis.core.plugin import Plugin
+from jarvis.core.router import CommandRouter
 from jarvis.llm.base import LLMProvider
+from jarvis.memory.inmemory import InMemoryBackend
+from jarvis.services.assistant import AssistantService
 
 
 class MockWeatherPlugin(Plugin):

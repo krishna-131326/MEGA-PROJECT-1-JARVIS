@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+
 from jarvis.core.models import Message
 
 
@@ -7,7 +7,7 @@ class MemoryBackend(ABC):
     """Abstract base class for memory persistence."""
 
     @abstractmethod
-    def get_messages(self, session_id: str) -> List[Message]:
+    def get_messages(self, session_id: str) -> list[Message]:
         """Retrieve the conversation history for a given session."""
         pass
 
@@ -22,6 +22,6 @@ class MemoryBackend(ABC):
         pass
 
     @abstractmethod
-    def list_sessions(self) -> List[str]:
+    def list_sessions(self) -> list[str]:
         """List all active session IDs."""
         pass

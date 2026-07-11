@@ -1,4 +1,3 @@
-import pytest
 from jarvis.core.router import CommandRouter
 from jarvis.plugins.news_plugin import NewsPlugin
 

@@ -1,8 +1,8 @@
-import logging
 import asyncio
+import logging
 
-from jarvis.core.config import settings
 from jarvis.api.dependencies import get_assistant
+from jarvis.core.config import settings
 
 logging.basicConfig(
     level=settings.log_level, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"

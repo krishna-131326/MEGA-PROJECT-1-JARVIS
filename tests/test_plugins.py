@@ -1,7 +1,8 @@
 import pytest
-from jarvis.plugins.news_plugin import NewsPlugin
+
 from jarvis.plugins.browser_plugin import BrowserPlugin
 from jarvis.plugins.music_plugin import MusicPlugin
+from jarvis.plugins.news_plugin import NewsPlugin
 from jarvis.providers.music_provider import WebMusicProvider
 
 

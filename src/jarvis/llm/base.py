@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional, Any
+from typing import Any
 
 from jarvis.core.models import Message
 
@@ -9,7 +9,7 @@ class LLMProvider(ABC):
 
     @abstractmethod
     async def generate(
-        self, messages: List[Message], tools: Optional[List[dict[str, Any]]] = None
+        self, messages: list[Message], tools: list[dict[str, Any]] | None = None
     ) -> str | dict[str, Any]:
         """Generates a response from the LLM based on the message history and available tools.
         Returns either a string (response text) or a dict (representing a tool call).

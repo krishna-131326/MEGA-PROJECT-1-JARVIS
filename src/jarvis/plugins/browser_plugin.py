@@ -1,6 +1,6 @@
 import webbrowser
-
 from typing import Any
+
 from jarvis.core.plugin import Plugin
 
 

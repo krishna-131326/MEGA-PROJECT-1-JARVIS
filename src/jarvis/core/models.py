@@ -1,18 +1,19 @@
+from datetime import UTC, datetime
+from typing import Any
+
 from pydantic import BaseModel, Field
-from datetime import datetime, timezone
-from typing import Optional, Any
 
 
 class Message(BaseModel):
     role: str
     content: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    tool: Optional[str] = None
-    tool_calls: Optional[list[dict[str, Any]]] = None
-    tool_call_id: Optional[str] = None
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    tool: str | None = None
+    tool_calls: list[dict[str, Any]] | None = None
+    tool_call_id: str | None = None
 
 
 class AssistantResponse(BaseModel):
     response: str
     source: str  # "plugin" or "llm"
-    plugin_used: Optional[str] = None
+    plugin_used: str | None = None

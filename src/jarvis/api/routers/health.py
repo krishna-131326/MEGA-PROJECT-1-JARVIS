@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends
 from typing import Any
-from jarvis.api.schemas import HealthResponse
+
+from fastapi import APIRouter, Depends
+
 from jarvis.api.dependencies import get_assistant
+from jarvis.api.schemas import HealthResponse
 from jarvis.services.assistant import AssistantService
 
 router = APIRouter(tags=["health"])

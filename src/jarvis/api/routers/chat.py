@@ -1,7 +1,9 @@
+from datetime import UTC, datetime
+
 from fastapi import APIRouter, Depends
-from datetime import datetime, timezone
-from jarvis.api.schemas import ChatRequest, ChatResponse
+
 from jarvis.api.dependencies import get_assistant
+from jarvis.api.schemas import ChatRequest, ChatResponse
 from jarvis.services.assistant import AssistantService
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
@@ -17,7 +19,7 @@ async def chat(
         response=assistant_response.response,
         source=assistant_response.source,
         plugin_used=assistant_response.plugin_used,
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.now(UTC),
     )
 
 

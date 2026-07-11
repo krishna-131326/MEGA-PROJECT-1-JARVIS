@@ -1,9 +1,9 @@
-from typing import Generator
-from jarvis.llm.base import LLMProvider
-from jarvis.core.router import CommandRouter
 from jarvis.core.config import settings
+from jarvis.core.router import CommandRouter
+from jarvis.llm.base import LLMProvider
 from jarvis.llm.grok import GrokProvider
 from jarvis.llm.mock import MockProvider
+from jarvis.memory.inmemory import InMemoryBackend
 from jarvis.plugins.browser_plugin import BrowserPlugin
 from jarvis.plugins.music_plugin import MusicPlugin
 from jarvis.plugins.news_plugin import NewsPlugin
@@ -26,7 +26,7 @@ def get_llm() -> LLMProvider:
     return MockProvider()
 
 
-from jarvis.memory.inmemory import InMemoryBackend
+
 
 # We can cache the service so we don't recreate it on every request
 _memory_backend = InMemoryBackend()

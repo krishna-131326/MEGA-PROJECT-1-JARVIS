@@ -1,11 +1,12 @@
 import logging
-import httpx
-from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
+from typing import Any, cast
 
-from typing import List, Optional, Any, cast
-from jarvis.llm.base import LLMProvider
+import httpx
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
+
 from jarvis.core.config import settings
 from jarvis.core.models import Message
+from jarvis.llm.base import LLMProvider
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +37,7 @@ class GrokProvider(LLMProvider):
         reraise=True,
     )
     async def _call_api(
-        self, messages: List[Message], tools: Optional[List[dict[str, Any]]] = None
+        self, messages: list[Message], tools: list[dict[str, Any]] | None = None
     ) -> str | dict[str, Any]:
         system_content = (
             "You are Jarvis, a helpful AI assistant. "
@@ -107,7 +108,7 @@ class GrokProvider(LLMProvider):
             return str(message_obj.get("content", ""))
 
     async def generate(
-        self, messages: List[Message], tools: Optional[List[dict[str, Any]]] = None
+        self, messages: list[Message], tools: list[dict[str, Any]] | None = None
     ) -> str | dict[str, Any]:
         logger.info(f"Grok generating response for {len(messages)} messages.")
         if not self.api_key:

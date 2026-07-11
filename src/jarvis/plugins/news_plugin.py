@@ -1,8 +1,8 @@
 import logging
+from typing import Any
 
 import httpx
 
-from typing import Any
 from jarvis.core.config import settings
 from jarvis.core.plugin import Plugin
 

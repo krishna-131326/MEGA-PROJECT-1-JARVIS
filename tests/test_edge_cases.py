@@ -1,13 +1,12 @@
+from unittest.mock import patch
+
 import pytest
-from unittest.mock import patch, mock_open
-import httpx
-from jarvis.plugins.news_plugin import NewsPlugin
+
+from jarvis.core.plugin import Plugin
 from jarvis.plugins.browser_plugin import BrowserPlugin
 from jarvis.plugins.music_plugin import MusicPlugin
+from jarvis.plugins.news_plugin import NewsPlugin
 from jarvis.providers.music_provider import WebMusicProvider
-from jarvis.core.router import CommandRouter
-from jarvis.core.plugin import Plugin
-from jarvis.core.config import settings
 
 
 class FaultyPlugin(Plugin):
