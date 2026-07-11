@@ -1,5 +1,9 @@
 # JARVIS Assistant
 
+![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/krishna-131326/MEGA-PROJECT-1-JARVIS/actions/workflows/ci.yml/badge.svg)](https://github.com/krishna-131326/MEGA-PROJECT-1-JARVIS/actions/workflows/ci.yml)
+
 This repository currently contains a Windows-oriented voice-command prototype. It is
 being rebuilt into a testable assistant platform. The audit deliberately does not claim
 that the existing voice, browser, news, or playback workflows are production-ready.
